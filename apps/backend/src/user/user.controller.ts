@@ -1,12 +1,16 @@
 import { Controller, Get } from '@nestjs/common';
-import { UserService } from './user.service';
 import { PinoLogger, InjectPinoLogger } from 'nestjs-pino';
+import { IGetAHello } from './domain/getHelloDto';
+import { GetHelloUseCase } from './application/usesCases/GetHelloUseCase';
 
-@Controller()
+@Controller('user')
 export class UserController {
-  constructor(private readonly appService: UserService) { }
+  constructor(
+    private getHelloUseCase: GetHelloUseCase
+  ) { }
 
-  @Get()
-  getHello(): void {
+  @Get('temp')
+  getHello() {
+    return this.getHelloUseCase.execute();
   }
 }
